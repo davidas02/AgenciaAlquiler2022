@@ -49,19 +49,7 @@ public class Furgoneta extends Vehiculo {
     @Override
     public float getPrecioAlquiler() {
         Grupo g = getGrupo();
-        float precio = 0;
-        switch (g) {
-            case A:
-                precio = 50 + 5 * capacidad;
-                break;
-            case B:
-                precio = 55 + 10 * capacidad;
-                break;
-            case C:
-                precio = 60 + 15 * capacidad;
-                break;
-        }
-        return precio;
+        return g.getPrecioFijo()+g.getPrecioFurgoneta()*capacidad;
     }
 
 }

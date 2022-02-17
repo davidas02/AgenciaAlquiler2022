@@ -49,18 +49,6 @@ public class Turismo extends Vehiculo{
     @Override
     public float getPrecioAlquiler() {
         Grupo g=getGrupo();
-        float precio=0;
-        switch(g){
-            case A:
-                precio=50+1.5f*plazas;
-                break;
-            case B:
-                precio= 55+2*plazas;
-                break;
-            case C:
-                precio=60+2.5f*plazas;
-                break;
-        }
-        return precio;
+        return g.getPrecioFijo()+g.getPrecioTurismo()*plazas;
     }
 }
