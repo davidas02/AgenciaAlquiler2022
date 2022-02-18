@@ -61,9 +61,9 @@ public class AgenciaAlquiler {
         return false;
     }
     /**
-     *  Metodo de busqueda de un vehiculo en la lista
+     *  Metodo de busqueda de un vehiculo en la agencia
      * @param matricula matricula del vehiculo a buscar
-     * @return Devuelve el vehiculo que hemos buscado por matricula
+     * @return Devuelve el vehiculo que hemos buscado por matricula o null si no se encuentra
      */
     public Vehiculo consultarVehiculo(String matricula) {
         for (Vehiculo v : flota) {
