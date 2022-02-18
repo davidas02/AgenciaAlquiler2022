@@ -5,6 +5,7 @@
  */
 package com.sauces.agenciaalquiler;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -20,9 +21,8 @@ public class AA {
         // TODO code application logic here
         Scanner teclado = new Scanner(System.in);
         AgenciaAlquiler aa = new AgenciaAlquiler();
-        int opcion, opcion2;
+        int opcion, opcion2,plazas;
         String matricula, grupo;
-        int plazas;
         float capacidad;
         boolean correcto;
         do {
@@ -50,7 +50,7 @@ public class AA {
                                 matricula = teclado.nextLine();
                                 do {
                                     correcto=false;
-                                    System.out.println("Introduce Grupo del vehiculo");
+                                    System.out.println("Introduce Grupo del vehiculo "+Arrays.toString(Grupo.values()));
                                     grupo = teclado.nextLine();
                                     for(Grupo g: Grupo.values()){
                                         if(grupo.equals(g.toString())){
@@ -73,7 +73,7 @@ public class AA {
                                 matricula = teclado.nextLine();
                                 do {
                                     correcto=false;
-                                    System.out.println("Introduce Grupo del vehiculo");
+                                    System.out.println("Introduce Grupo del vehiculo "+Arrays.toString(Grupo.values()));
                                     grupo = teclado.nextLine();
                                     for(Grupo g: Grupo.values()){
                                         if(grupo.equals(g.toString())){
@@ -99,15 +99,20 @@ public class AA {
                 case 2:
                     System.out.println("Introduce Matricula del vehiculo");
                     matricula = teclado.nextLine();
-                    System.out.println(aa.consultarVehiculo(matricula));
+                    if(aa.consultarVehiculo(matricula)!=null){
+                        System.out.println(aa.consultarVehiculo(matricula));
+                    }else{
+                        System.out.println("Vehiculo no existe");
+                    }
                     break;
                 case 3:
                     System.out.println("Introduce Matricula del vehiculo");
                     matricula = teclado.nextLine();
-                    if (aa.eliminarVehiculo(aa.consultarVehiculo(matricula)) && aa.consultarVehiculo(matricula) != null) {
+                    if (aa.consultarVehiculo(matricula) != null) {
+                        aa.eliminarVehiculo(aa.consultarVehiculo(matricula));
                         System.out.println("Vehiculo eliminado correctamente");
                     } else {
-                        System.out.println("El vehiculo no se ha podido eliminal");
+                        System.out.println("El vehiculo no se ha podido eliminar");
                     }
                     break;
                 case 4:
@@ -132,7 +137,7 @@ public class AA {
                                 break;
                             case 3:
                                 for (Vehiculo v : aa.listarVehiculosPorPrecio()) {
-                                    if (v.getClass().equals(Furgoneta.class)) {
+                                    if (v instanceof Furgoneta) {
                                         System.out.println(v.toString());
                                     }
                                 }
@@ -160,12 +165,15 @@ public class AA {
                     Vehiculo vehiculo = aa.getVehiculoMasBarato();
                     System.out.println(vehiculo + " " + vehiculo.getPrecioAlquiler());
                     break;
+                case 0:
+                    System.out.println("ADIOS");
+                    break;
                 default:
                     System.out.println("Opcion Incorrecta");
                     break;
             }
         } while (opcion != 0);
-        System.out.println("ADIOS");
+        
     }
 
 }

@@ -79,7 +79,10 @@ public class AgenciaAlquiler {
      * @return true si se elimina correctamente y false si no se puede eliminar
      */
     public boolean eliminarVehiculo(Vehiculo vehiculo){
+       if(vehiculo!=null){
         return flota.remove(vehiculo);
+       }
+       return false;
     }
     /**
      * Metodo que lista los vehiculos por precio
