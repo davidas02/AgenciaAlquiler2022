@@ -16,7 +16,7 @@ public class Furgoneta extends Vehiculo {
     public Furgoneta() {
     }
 
-    public Furgoneta(String matricula, Grupo grupo, float capacidad) {
+    public Furgoneta(Matricula matricula, Grupo grupo, float capacidad) {
         super(matricula, grupo);
         this.capacidad = capacidad;
     }

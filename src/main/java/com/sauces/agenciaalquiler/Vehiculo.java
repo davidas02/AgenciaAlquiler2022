@@ -12,11 +12,13 @@ import java.util.Objects;
  * @author David Aparicio Sir
  */
 public abstract class Vehiculo implements Comparable<Vehiculo> {
-    private String matricula;
+    private Matricula matricula;
     private Grupo grupo;
 
-    public Vehiculo(String matricula, Grupo grupo) {
-        this.matricula = matricula;
+    public Vehiculo(Matricula matricula, Grupo grupo) {
+        if(matricula!=null){
+            this.matricula = matricula;
+        }
         this.grupo = grupo;
     }
 
@@ -26,15 +28,17 @@ public abstract class Vehiculo implements Comparable<Vehiculo> {
      * Metodo que devuelve la matricula del vehiculo
      * @return matricula del vehiculo
      */
-    public String getMatricula() {
+    public Matricula getMatricula() {
         return matricula;
     }
     /**
      * Metodo que establece la Matricula de un vehiculo
      * @param matricula Matricula del vehiculo
      */
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
+    public void setMatricula(Matricula matricula) {
+        if(matricula!=null){
+            this.matricula = matricula;
+        }
     }
     /**
      * Metodo que devuelve el grupo del vehiculo

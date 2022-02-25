@@ -12,7 +12,7 @@ package com.sauces.agenciaalquiler;
 public class Turismo extends Vehiculo{
     private int plazas;
 
-    public Turismo(String matricula, Grupo grupo,int plazas) {
+    public Turismo(Matricula matricula, Grupo grupo,int plazas) {
         super(matricula, grupo);
         this.plazas = plazas;
     }

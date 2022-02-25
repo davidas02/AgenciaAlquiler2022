@@ -65,7 +65,7 @@ public class AgenciaAlquiler {
      * @param matricula matricula del vehiculo a buscar
      * @return Devuelve el vehiculo que hemos buscado por matricula o null si no se encuentra
      */
-    public Vehiculo consultarVehiculo(String matricula) {
+    public Vehiculo consultarVehiculo(Matricula matricula) {
         for (Vehiculo v : flota) {
             if (matricula.equals(v.getMatricula())) {
                 return v;
