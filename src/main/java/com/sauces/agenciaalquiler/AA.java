@@ -36,6 +36,7 @@ public class AA {
             System.out.println("0.-Salir");
             System.out.println("Elige una Opcion");
             opcion = teclado.nextInt();
+            teclado.nextLine();
             switch (opcion) {
                 case 1:
                     do {
@@ -141,23 +142,20 @@ public class AA {
                     break;
 
                 case 3:
-
+                        try {
                     System.out.println("Introduce Matricula del vehiculo");
                     mat = teclado.nextLine();
-                     {
-                        try {
-                            matricula = Matricula.valueOf(mat);
-                        } catch (MatriculaException ex) {
-                            System.out.println(ex.getMessage());
-                        }
-                    }
-                    if (aa.consultarVehiculo(matricula) != null) {
-                        aa.eliminarVehiculo(aa.consultarVehiculo(matricula));
-                        System.out.println("Vehiculo eliminado correctamente");
-                    } else {
-                        System.out.println("El vehiculo no se ha podido eliminar");
-                    }
-                    break;
+                    matricula = Matricula.valueOf(mat);
+                } catch (MatriculaException ex) {
+                    System.out.println(ex.getMessage());
+                }
+                if (aa.consultarVehiculo(matricula) != null) {
+                    aa.eliminarVehiculo(aa.consultarVehiculo(matricula));
+                    System.out.println("Vehiculo eliminado correctamente");
+                } else {
+                    System.out.println("El vehiculo no se ha podido eliminar");
+                }
+                break;
 
                 case 4:
                     do {
