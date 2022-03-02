@@ -7,7 +7,9 @@ package com.sauces.agenciaalquiler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *  Clase Agencia alquiler 
@@ -16,10 +18,10 @@ import java.util.List;
 public class AgenciaAlquiler {
 
     private String nombre;
-    private List<Vehiculo> flota;
+    private Set<Vehiculo> flota;
 
     public AgenciaAlquiler() {
-        flota=new ArrayList<>();
+        flota=new HashSet<>();
     }
     /**
      * Metodo para obtener el nombre de la agencia alquiler
@@ -39,14 +41,14 @@ public class AgenciaAlquiler {
      *  Metodo para obtener la flota de la agencia
      * @return Lista de los vehiculos
      */
-    public List<Vehiculo> getFlota() {
+    public Set<Vehiculo> getFlota() {
         return flota;
     }
     /**
      *  Establece la lista de la flota de la AgenciaAlquiler
      * @param flota Lista de los vehiculos
      */
-    public void setFlota(List<Vehiculo> flota) {
+    public void setFlota(Set<Vehiculo> flota) {
         this.flota = flota;
     }
     /**
