@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  *  Clase Agencia alquiler 
@@ -18,10 +20,10 @@ import java.util.Set;
 public class AgenciaAlquiler {
 
     private String nombre;
-    private Set<Vehiculo> flota;
+    private Map<Matricula,Vehiculo> flota;
 
     public AgenciaAlquiler() {
-        flota=new HashSet<>();
+        flota=new TreeMap<>();
     }
     /**
      * Metodo para obtener el nombre de la agencia alquiler
@@ -41,14 +43,14 @@ public class AgenciaAlquiler {
      *  Metodo para obtener la flota de la agencia
      * @return Lista de los vehiculos
      */
-    public Set<Vehiculo> getFlota() {
+    public Map<Matricula,Vehiculo> getFlota() {
         return flota;
     }
     /**
      *  Establece la lista de la flota de la AgenciaAlquiler
      * @param flota Lista de los vehiculos
      */
-    public void setFlota(Set<Vehiculo> flota) {
+    public void setFlota(Map<Matricula,Vehiculo> flota) {
         this.flota = flota;
     }
     /**
@@ -57,10 +59,11 @@ public class AgenciaAlquiler {
      * @return true si el vehiculo se introduce y false si el vehiculo no se introduce en la lista
      */
     public boolean incluirVehiculo(Vehiculo vehiculo) {
-        if (vehiculo != null && !flota.contains(vehiculo)) {
-            return flota.add(vehiculo);
+        boolean incluido=false;
+        if(flota.putIfAbsent(vehiculo.getMatricula(),vehiculo)==null){
+            incluido=true;
         }
-        return false;
+        return incluido;
     }
     /**
      *  Metodo de busqueda de un vehiculo en la agencia
@@ -68,12 +71,10 @@ public class AgenciaAlquiler {
      * @return Devuelve el vehiculo que hemos buscado por matricula o null si no se encuentra
      */
     public Vehiculo consultarVehiculo(Matricula matricula) {
-        for (Vehiculo v : flota) {
-            if (matricula.equals(v.getMatricula())) {
-                return v;
-            }
-        }
-        return null;
+       if(flota.containsKey(matricula)){
+           return flota.get(matricula);
+       }
+       return null;
     }
     /**
      * Metodo que elimina un vehiculo
@@ -82,7 +83,7 @@ public class AgenciaAlquiler {
      */
     public boolean eliminarVehiculo(Vehiculo vehiculo){
        if(vehiculo!=null){
-        return flota.remove(vehiculo);
+        return flota.remove(vehiculo.getMatricula(),vehiculo);
        }
        return false;
     }
@@ -91,7 +92,7 @@ public class AgenciaAlquiler {
      * @return lista de los vehiculos ordenados por precio
      */
     public List<Vehiculo> listarVehiculosPorPrecio(){
-        List<Vehiculo> salida=new  ArrayList<>(flota);
+        List<Vehiculo> salida=new  ArrayList<>(flota.values());
         Collections.sort(salida,new ComparadorPrecio());
         return salida;
     }
@@ -102,7 +103,7 @@ public class AgenciaAlquiler {
      */
     public List<Vehiculo> listarVehiculos(Grupo grupo){
         List<Vehiculo> salida=new ArrayList<>();
-        for(Vehiculo v:flota){
+        for(Vehiculo v:flota.values()){
             if(v.getGrupo().equals(grupo)){
                 salida.add(v);
             }
@@ -114,6 +115,6 @@ public class AgenciaAlquiler {
      * @return vehiculo con el precio de alquiler mas bajo de la flota
      */
     public Vehiculo getVehiculoMasBarato(){
-        return Collections.min(flota,new ComparadorPrecio());
+        return Collections.min(flota.values(),new ComparadorPrecio());
     }
 }
