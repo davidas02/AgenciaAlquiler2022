@@ -5,13 +5,14 @@
  */
 package com.sauces.agenciaalquiler;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Clase abstracta que sirve como clase envoltorio para las clases Furgoneta y Turismo
  * @author David Aparicio Sir
  */
-public abstract class Vehiculo implements Comparable<Vehiculo> {
+public abstract class Vehiculo implements Comparable<Vehiculo>,Serializable {
     private Matricula matricula;
     private Grupo grupo;
 

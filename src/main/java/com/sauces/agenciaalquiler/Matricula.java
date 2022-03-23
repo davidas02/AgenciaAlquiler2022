@@ -5,6 +5,7 @@
  */
 package com.sauces.agenciaalquiler;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,7 +14,7 @@ import java.util.regex.Pattern;
  *
  * @author daw1
  */
-public class Matricula implements Comparable<Matricula>{
+public class Matricula implements Comparable<Matricula>,Serializable{
     private String valor;
 
     public Matricula() {

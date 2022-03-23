@@ -21,6 +21,7 @@ public class AgenciaAlquiler {
 
     private String nombre;
     private Map<Matricula,Vehiculo> flota;
+    private VehiculoDao vehiculoDao;
 
     public AgenciaAlquiler() {
         flota=new TreeMap<>();
@@ -53,6 +54,15 @@ public class AgenciaAlquiler {
     public void setFlota(Map<Matricula,Vehiculo> flota) {
         this.flota = flota;
     }
+
+    public VehiculoDao getVehiculoDao() {
+        return vehiculoDao;
+    }
+
+    public void setVehiculoDao(VehiculoDao vehiculoDao) {
+        this.vehiculoDao = vehiculoDao;
+    }
+    
     /**
      *  Metodo para introducir el vehiculo en la lista de vehiculos
      * @param vehiculo Vehiculo a inluir
@@ -116,5 +126,27 @@ public class AgenciaAlquiler {
      */
     public Vehiculo getVehiculoMasBarato(){
         return Collections.min(flota.values(),new ComparadorPrecio());
+    }
+    public int guardarVehiculos()throws DaoException{
+        int n=0;
+        if(vehiculoDao==null){
+            throw new DaoException("No se ha podido encontrar la extension");
+        }
+        n=vehiculoDao.insertar(new ArrayList<>(flota.values()));
+        return n;
+    }
+    public int cargarVehiculos() throws DaoException{
+        int n=0;
+        if(vehiculoDao==null){
+            throw new DaoException("No se ha pudido encontrar la extension del fichero");
+  
+        }
+            List<Vehiculo> listado=vehiculoDao.listar();
+            for(Vehiculo v:listado){
+                if(incluirVehiculo(v)){
+                    n++;
+                }
+            }
+        return n;
     }
 }

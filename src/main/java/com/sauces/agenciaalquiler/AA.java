@@ -7,6 +7,8 @@ package com.sauces.agenciaalquiler;
 
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,17 +24,20 @@ public class AA {
         Scanner teclado = new Scanner(System.in);
         AgenciaAlquiler aa = new AgenciaAlquiler();
         int opcion, opcion2, plazas;
-        String mat, gru;
+        String mat, gru,fichero;
         Grupo grupo = null;
         float capacidad;
         boolean correcto;
         Matricula matricula = null;
+        int n=0;
         do {
             System.out.println("1.-Crear Vehiculo");
             System.out.println("2.-Consultar Vehiculo");
             System.out.println("3.-Eliminar Vehiculo");
             System.out.println("4.-Listar Vehiculos");
             System.out.println("5.-Consultar alquiler mas barato");
+            System.out.println("6.-Guardar Vehiculos");
+            System.out.println("7.-Cargar Vehiculos");
             System.out.println("0.-Salir");
             System.out.println("Elige una Opcion");
             opcion = teclado.nextInt();
@@ -163,6 +168,8 @@ public class AA {
                         System.out.println("2.-Listar Turismos");
                         System.out.println("3.-Listar Furgonetas");
                         System.out.println("4.-Listar vehiculos por grupo");
+                        System.out.println("5.-Mostrar vehiculo mas Barato");
+
                         System.out.println("0.-Cerrar");
                         opcion2 = teclado.nextInt();
                         teclado.nextLine();
@@ -208,6 +215,31 @@ public class AA {
                     Vehiculo vehiculo = aa.getVehiculoMasBarato();
                     System.out.println(vehiculo + " " + vehiculo.getPrecioAlquiler());
                     break;
+                case 6:
+                {
+                    System.out.println("Introduce el nombre del fichero a guardar");
+                    fichero=teclado.nextLine();
+                    aa.setVehiculoDao(getDao(fichero));
+                    try {
+                        
+                        n=aa.guardarVehiculos();
+                        System.out.println("Se han guardado "+n+" vehiculos");
+                    } catch (DaoException ex) {
+                        System.out.println(ex.toString());                    }
+                }
+                    break;
+
+                case 7:
+                    System.out.println("Introduce el nombre del fichero a cargar");
+                    fichero=teclado.nextLine();
+                    aa.setVehiculoDao(getDao(fichero));
+                    try {
+                      n=aa.cargarVehiculos();
+                        System.out.println("Se han cargado "+n+" vehiculos");
+                }catch (DaoException ex) {
+                        System.out.println(ex.getMessage());
+                    } 
+                    break;
                 case 0:
                     System.out.println("ADIOS");
                     break;
@@ -217,6 +249,25 @@ public class AA {
             }
         } while (opcion != 0);
 
+    }
+    private static VehiculoDao getDao(String fichero){
+        VehiculoDao vd=null;
+        int posPunto=fichero.lastIndexOf(".")+1;
+        String extension=fichero.substring(posPunto);
+        switch(extension){
+            case "csv":
+                vd=new VehiculoDaoCsv(fichero);
+            break;
+            case "obj":
+                vd=new VehiculoDaoObj(fichero);
+            break;
+            case "json":
+                vd=new VehiculoDaoJson(fichero);
+                break;
+            case "xml":
+                vd=new VehiculoDaoXml(fichero);
+        }
+        return vd;
     }
 
 }
