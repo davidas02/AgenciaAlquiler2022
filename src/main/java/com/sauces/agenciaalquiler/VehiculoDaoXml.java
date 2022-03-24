@@ -42,7 +42,7 @@ public class VehiculoDaoXml implements VehiculoDao {
     @Override
     public List<Vehiculo> listar() throws DaoException {
         XStream xstream = new XStream(new DomDriver());
-        //XStream.setupDefaultSecurity(xstream);
+        //XStream.setupDefaultSecurity(xstream); Deprecated
         xstream.allowTypeHierarchy(Turismo.class);
         xstream.allowTypeHierarchy(Furgoneta.class);
         List<Vehiculo> listado;
@@ -63,7 +63,7 @@ public class VehiculoDaoXml implements VehiculoDao {
     @Override
     public int insertar(List<Vehiculo> vehiculos) throws DaoException {
         XStream xstream = new XStream(new DomDriver());
-        //XStream.setupDefaultSecurity(xstream);
+        //XStream.setupDefaultSecurity(xstream); Deprecated 
         xstream.allowTypeHierarchy(Turismo.class);
         xstream.allowTypeHierarchy(Furgoneta.class);
         try (BufferedWriter bw = Files.newBufferedWriter(path)) {

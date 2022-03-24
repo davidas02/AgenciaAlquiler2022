@@ -63,8 +63,8 @@ public class VehiculoDaoCsv implements VehiculoDao{
                 listado.add(vehiculo);
                 linea=entrada.readLine();
             }
-        }catch(IOException ioe){
-            throw new DaoException(ioe.getMessage());
+        }catch(MatriculaException | IOException me){
+            throw new DaoException(me.getMessage());
         } catch(Exception ex){
         throw new DaoException("Error de formato");
         }

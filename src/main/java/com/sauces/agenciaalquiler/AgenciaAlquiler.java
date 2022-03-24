@@ -14,44 +14,53 @@ import java.util.Set;
 import java.util.TreeMap;
 
 /**
- *  Clase Agencia alquiler 
+ * Clase Agencia alquiler
+ *
  * @author David Aparicio Sir
  */
 public class AgenciaAlquiler {
 
     private String nombre;
-    private Map<Matricula,Vehiculo> flota;
+    private Map<Matricula, Vehiculo> flota;
     private VehiculoDao vehiculoDao;
 
     public AgenciaAlquiler() {
-        flota=new TreeMap<>();
+        flota = new TreeMap<>();
     }
+
     /**
      * Metodo para obtener el nombre de la agencia alquiler
+     *
      * @return nombre de la AgenciaAlquiler
      */
     public String getNombre() {
         return nombre;
     }
+
     /**
      * Establece el nombre de la AgenciaAlquiler
+     *
      * @param nombre nombre de la AgenciaAlquiler
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
     /**
-     *  Metodo para obtener la flota de la agencia
+     * Metodo para obtener la flota de la agencia
+     *
      * @return Lista de los vehiculos
      */
-    public Map<Matricula,Vehiculo> getFlota() {
+    public Map<Matricula, Vehiculo> getFlota() {
         return flota;
     }
+
     /**
-     *  Establece la lista de la flota de la AgenciaAlquiler
+     * Establece la lista de la flota de la AgenciaAlquiler
+     *
      * @param flota Lista de los vehiculos
      */
-    public void setFlota(Map<Matricula,Vehiculo> flota) {
+    public void setFlota(Map<Matricula, Vehiculo> flota) {
         this.flota = flota;
     }
 
@@ -62,91 +71,105 @@ public class AgenciaAlquiler {
     public void setVehiculoDao(VehiculoDao vehiculoDao) {
         this.vehiculoDao = vehiculoDao;
     }
-    
+
     /**
-     *  Metodo para introducir el vehiculo en la lista de vehiculos
+     * Metodo para introducir el vehiculo en la lista de vehiculos
+     *
      * @param vehiculo Vehiculo a inluir
-     * @return true si el vehiculo se introduce y false si el vehiculo no se introduce en la lista
+     * @return true si el vehiculo se introduce y false si el vehiculo no se
+     * introduce en la lista
      */
     public boolean incluirVehiculo(Vehiculo vehiculo) {
-        boolean incluido=false;
-        if(flota.putIfAbsent(vehiculo.getMatricula(),vehiculo)==null){
-            incluido=true;
+        boolean incluido = false;
+        if (flota.putIfAbsent(vehiculo.getMatricula(), vehiculo) == null) {
+            incluido = true;
         }
         return incluido;
     }
+
     /**
-     *  Metodo de busqueda de un vehiculo en la agencia
+     * Metodo de busqueda de un vehiculo en la agencia
+     *
      * @param matricula matricula del vehiculo a buscar
-     * @return Devuelve el vehiculo que hemos buscado por matricula o null si no se encuentra
+     * @return Devuelve el vehiculo que hemos buscado por matricula o null si no
+     * se encuentra
      */
     public Vehiculo consultarVehiculo(Matricula matricula) {
-       if(flota.containsKey(matricula)){
-           return flota.get(matricula);
-       }
-       return null;
+        if (flota.containsKey(matricula)) {
+            return flota.get(matricula);
+        }
+        return null;
     }
+
     /**
      * Metodo que elimina un vehiculo
+     *
      * @param vehiculo vehiculo a eliminar
      * @return true si se elimina correctamente y false si no se puede eliminar
      */
-    public boolean eliminarVehiculo(Vehiculo vehiculo){
-       if(vehiculo!=null){
-        return flota.remove(vehiculo.getMatricula(),vehiculo);
-       }
-       return false;
+    public boolean eliminarVehiculo(Vehiculo vehiculo) {
+        if (vehiculo != null) {
+            return flota.remove(vehiculo.getMatricula(), vehiculo);
+        }
+        return false;
     }
+
     /**
      * Metodo que lista los vehiculos por precio
+     *
      * @return lista de los vehiculos ordenados por precio
      */
-    public List<Vehiculo> listarVehiculosPorPrecio(){
-        List<Vehiculo> salida=new  ArrayList<>(flota.values());
-        Collections.sort(salida,new ComparadorPrecio());
+    public List<Vehiculo> listarVehiculosPorPrecio() {
+        List<Vehiculo> salida = new ArrayList<>(flota.values());
+        Collections.sort(salida, new ComparadorPrecio());
         return salida;
     }
+
     /**
      * Metodo que devuelve una lista de vehiculos del grupo elegido
+     *
      * @param grupo grupo del cual queremos buscar los vehiculos que lo componen
      * @return Lista de vehiculos del grupo escogido
      */
-    public List<Vehiculo> listarVehiculos(Grupo grupo){
-        List<Vehiculo> salida=new ArrayList<>();
-        for(Vehiculo v:flota.values()){
-            if(v.getGrupo().equals(grupo)){
+    public List<Vehiculo> listarVehiculos(Grupo grupo) {
+        List<Vehiculo> salida = new ArrayList<>();
+        for (Vehiculo v : flota.values()) {
+            if (v.getGrupo().equals(grupo)) {
                 salida.add(v);
             }
         }
         return salida;
     }
+
     /**
      * Metodo que devuelve el vehiculo mas barato de la flota
+     *
      * @return vehiculo con el precio de alquiler mas bajo de la flota
      */
-    public Vehiculo getVehiculoMasBarato(){
-        return Collections.min(flota.values(),new ComparadorPrecio());
+    public Vehiculo getVehiculoMasBarato() {
+        return Collections.min(flota.values(), new ComparadorPrecio());
     }
-    public int guardarVehiculos()throws DaoException{
-        int n=0;
-        if(vehiculoDao==null){
-            throw new DaoException("No se ha podido encontrar la extension");
+
+    public int guardarVehiculos() throws DaoException {
+        int n = 0;
+        if (vehiculoDao == null) {
+            throw new DaoException("No se ha podido encontrar la extension del fichero");
         }
-        n=vehiculoDao.insertar(new ArrayList<>(flota.values()));
+        n = vehiculoDao.insertar(new ArrayList<>(flota.values()));
         return n;
     }
-    public int cargarVehiculos() throws DaoException{
-        int n=0;
-        if(vehiculoDao==null){
+
+    public int cargarVehiculos() throws DaoException {
+        if (vehiculoDao == null) {
             throw new DaoException("No se ha pudido encontrar la extension del fichero");
-  
         }
-            List<Vehiculo> listado=vehiculoDao.listar();
-            for(Vehiculo v:listado){
-                if(incluirVehiculo(v)){
-                    n++;
-                }
+        int n = 0;
+        List<Vehiculo> listado = vehiculoDao.listar();
+        for (Vehiculo v : listado) {
+            if (incluirVehiculo(v)) {
+                n++;
             }
+        }
         return n;
     }
 }

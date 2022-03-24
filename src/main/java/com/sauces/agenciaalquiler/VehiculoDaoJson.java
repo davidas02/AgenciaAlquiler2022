@@ -7,6 +7,8 @@ package com.sauces.agenciaalquiler;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import java.io.BufferedReader;
@@ -48,8 +50,7 @@ public class VehiculoDaoJson implements VehiculoDao {
     public List<Vehiculo> listar() throws DaoException {
         Type tipo = new TypeToken<List<Vehiculo>>() {
         }.getType();
-        RuntimeTypeAdapterFactory<Vehiculo> empleadoAdapter
-                = RuntimeTypeAdapterFactory.of(Vehiculo.class, "type");
+        RuntimeTypeAdapterFactory<Vehiculo> empleadoAdapter= RuntimeTypeAdapterFactory.of(Vehiculo.class, "type");
         empleadoAdapter.registerSubtype(Turismo.class, "Turismo");
         empleadoAdapter.registerSubtype(Furgoneta.class, "Furgoneta");
         GsonBuilder builder = new GsonBuilder();
@@ -59,7 +60,9 @@ public class VehiculoDaoJson implements VehiculoDao {
         List<Vehiculo> listado;
         try (BufferedReader br = Files.newBufferedReader(path)) {
             listado = gson.fromJson(br, tipo);
-        } catch (IOException ex) {
+        }catch(JsonSyntaxException | JsonIOException jse){
+            throw new DaoException("Formato Incorrecto");
+        }catch (IOException ex) {
             throw new DaoException(ex.toString());
         }
         return listado;
