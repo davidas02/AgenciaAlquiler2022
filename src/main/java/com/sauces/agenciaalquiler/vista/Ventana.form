@@ -17,11 +17,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Abrir"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miAbrirActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miGuardar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Guardar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miGuardarActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -251,6 +257,9 @@
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbTipoActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -276,6 +285,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="BORRAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bBorrarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bModificar">
           <Properties>
@@ -304,13 +316,10 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="tablaVehiculos" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="panelTablaVehiculos" alignment="1" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="rbListarMatricula" min="-2" max="-2" attributes="0"/>
@@ -346,7 +355,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="bListar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="tablaVehiculos" pref="396" max="32767" attributes="0"/>
+                  <Component id="panelTablaVehiculos" pref="396" max="32767" attributes="0"/>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lOrdenListado" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -370,25 +379,27 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="LISTAR VEH&#xcd;CULOS"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bListarActionPerformed"/>
+          </Events>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="tablaVehiculos">
+        <Container class="javax.swing.JScrollPane" name="panelTablaVehiculos">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="tablaVehiculos">
               <Properties>
-                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                  </Table>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="vehiculoTM" type="code"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tablaVehiculos.getSelectionModel().addListSelectionListener(new ListSelectionListener(){&#xa;    public void valueChanged(ListSelectionEvent lse){&#xa;        int fila=tablaVehiculos.getSelectedRow();&#xa;        if(fila&gt;=0){&#xa;            mostrarMatricula((String) tablaVehiculos.getValueAt(fila,0));&#xa;            mostrarGrupo((String)tablaVehiculos.getValueAt(fila,2));&#xa;            String tipo=(String)tablaVehiculos.getValueAt(fila, 1);&#xa;            if(tipo.equals(&quot;TURISMO&quot;)){&#xa;                mostrarPlazas((int)tablaVehiculos.getValueAt(fila, 3));&#xa;            }else{&#xa;                mostrarCapacidad((float) tablaVehiculos.getValueAt(fila,4));&#xa;            }&#xa;            mostrarPrecioAlquiler((float)tablaVehiculos.getValueAt(fila,5));&#xa;        }&#xa;    }&#xa;}&#xa;&#xa;);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="vehiculoTM=new VehiculoTableModel();"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -444,8 +455,8 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
                 <StringItem index="0" value="TODOS"/>
-                <StringItem index="1" value="TURISMO"/>
-                <StringItem index="2" value="FURGONETA"/>
+                <StringItem index="1" value="TURISMOS"/>
+                <StringItem index="2" value="FURGONETAS"/>
               </StringArray>
             </Property>
           </Properties>
@@ -494,11 +505,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="MOSTRAR VEH&#xcd;CULO M&#xc1;S BARATO"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bMasBaratoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bMasCaro">
           <Properties>
             <Property name="text" type="java.lang.String" value="MOSTRAR VEH&#xcd;CULO M&#xc1;S CARO"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bMasCaroActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
