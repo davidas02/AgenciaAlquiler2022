@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sauces.agenciaalquiler;
+package com.sauces.agenciaalquiler.modelo;
 
 /**
  *
  * @author daw1
  */
-public class DaoException extends Exception{
+public class MatriculaException  extends Exception{
 
-    public DaoException(String mesage) {
-        super(mesage);
+    public MatriculaException(String message) {
+        super(message);
     }
     
 }
