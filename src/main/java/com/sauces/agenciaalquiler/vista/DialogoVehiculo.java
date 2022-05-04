@@ -83,6 +83,8 @@ public class DialogoVehiculo extends javax.swing.JDialog {
 
         lCapacidad.setText("CAPACIDAD");
 
+        tfCapacidad.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+
         javax.swing.GroupLayout panelVehiculoLayout = new javax.swing.GroupLayout(panelVehiculo);
         panelVehiculo.setLayout(panelVehiculoLayout);
         panelVehiculoLayout.setHorizontalGroup(

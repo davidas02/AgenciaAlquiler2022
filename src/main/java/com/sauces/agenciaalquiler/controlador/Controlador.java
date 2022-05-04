@@ -6,6 +6,7 @@
 package com.sauces.agenciaalquiler.controlador;
 
 import com.sauces.agenciaalquiler.modelo.AgenciaAlquiler;
+import com.sauces.agenciaalquiler.modelo.ComparadorPrecio;
 import com.sauces.agenciaalquiler.modelo.DaoException;
 import com.sauces.agenciaalquiler.modelo.Furgoneta;
 import com.sauces.agenciaalquiler.modelo.Grupo;
@@ -20,9 +21,8 @@ import com.sauces.agenciaalquiler.modelo.VehiculoDaoObj;
 import com.sauces.agenciaalquiler.modelo.VehiculoDaoXml;
 import com.sauces.agenciaalquiler.vista.Ventana;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -67,19 +67,34 @@ public class Controlador {
     }
 
     public void borrarVehiculo() {
+        try {
+            Matricula matricula = Matricula.valueOf(vista.getMatricula());
+            Vehiculo v = agenciaAlquiler.consultarVehiculo(matricula);
+            if (v == null) {
+                vista.mostrarMensaje("El vehiculo con matricula " + matricula.toString() + " no existe");
+            } else {
+                if (agenciaAlquiler.eliminarVehiculo(v)) {
+                    vista.mostrarMensaje("El vehiculo con matricula " + matricula.toString() + " ha sido eliminado");
+                } else {
 
+                    vista.mostrarMensaje("El vehiculo con matricula " + matricula.toString() + " no ha podido ser eliminado");
+                }
+            }
+        } catch (MatriculaException ex) {
+            vista.mostrarMensaje(ex.getMessage());
+        }
     }
 
     public void buscarVehiculo() {
         try {
-            Matricula matricula=Matricula.valueOf(vista.getMatricula());
-            Vehiculo v=agenciaAlquiler.consultarVehiculo(matricula);
+            Matricula matricula = Matricula.valueOf(vista.getMatricula());
+            Vehiculo v = agenciaAlquiler.consultarVehiculo(matricula);
             vista.mostrarGrupo(v.getGrupo().toString());
             vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
-            if(v instanceof Turismo){
+            if (v instanceof Turismo) {
                 vista.mostrarPlazas(((Turismo) v).getPlazas());
-            }else{
-                vista.mostrarCapacidad(((Furgoneta)v).getCapacidad());
+            } else {
+                vista.mostrarCapacidad(((Furgoneta) v).getCapacidad());
             }
         } catch (MatriculaException ex) {
             vista.mostrarMensaje(ex.getMessage());
@@ -91,24 +106,58 @@ public class Controlador {
     }
 
     public void listarVehiculos() {
-        vista.listarVehiculos(agenciaAlquiler.listarVehiculosPorPrecio());
+        String grupo = vista.getFiltroGrupo();
+        List<Vehiculo> listado = null;
+        List<Vehiculo> listado2 = null;
+        if (!grupo.equals("TODOS")) {
+            listado = agenciaAlquiler.listarVehiculos(Grupo.valueOf(grupo));
+        } else {
+            listado = new ArrayList<>(agenciaAlquiler.getFlota().values());
+        }
+        String tipo = vista.getFiltroTipo();
+        switch (tipo) {
+            case "TODOS":
+                listado2=new ArrayList<>(listado);
+                break;
+            case "TURISMOS":
+                listado2=new ArrayList<>();
+                for (Vehiculo v : listado) {
+                    if (v instanceof Turismo) {
+                       listado2.add(v);
+                    }
+                }
+                break;
+            case "FURGONETAS":
+                listado2=new ArrayList<>();
+                for (Vehiculo v : listado) {
+                    if (v instanceof Furgoneta) {
+                        listado2.add(v);
+                    }
+                }
+                break;
+        }
+        
+        if (listado2 != null) {
+            vista.listarVehiculos(listado2);
+        }
+
     }
 
     public void guardarVehiculos() {
         agenciaAlquiler.setVehiculoDao(getDao(vista.getArchivo()));
         try {
-            vista.mostrarMensaje("Se han guardado "+agenciaAlquiler.guardarVehiculos()+" vehiculos");
+            vista.mostrarMensaje("Se han guardado " + agenciaAlquiler.guardarVehiculos() + " vehiculos");
         } catch (DaoException ex) {
-           vista.mostrarMensaje(ex.getMessage());
+            vista.mostrarMensaje(ex.getMessage());
         }
     }
 
     public void cargarVehiculos() {
-       agenciaAlquiler.setVehiculoDao(getDao(vista.getArchivo()));
+        agenciaAlquiler.setVehiculoDao(getDao(vista.getArchivo()));
         try {
-            vista.mostrarMensaje("Se han cargado "+agenciaAlquiler.cargarVehiculos()+" vehiculos");
+            vista.mostrarMensaje("Se han cargado " + agenciaAlquiler.cargarVehiculos() + " vehiculos");
         } catch (DaoException ex) {
-           vista.mostrarMensaje(ex.getMessage());
+            vista.mostrarMensaje(ex.getMessage());
         }
     }
 
@@ -116,39 +165,56 @@ public class Controlador {
         Vehiculo v = agenciaAlquiler.getVehiculoMasBarato();
         vista.mostrarMatricula(v.getMatricula().toString());
         vista.mostrarGrupo(v.getGrupo().toString());
-        String tipo=v.getClass().getSimpleName();
-        vista.mostrarTipo(tipo);
-        if(v instanceof Turismo){
+        String tipo = v.getClass().getSimpleName();
+
+        if (v instanceof Turismo) {
             vista.mostrarPlazas(((Turismo) v).getPlazas());
-        }else{
-        vista.mostrarCapacidad(((Furgoneta)v).getCapacidad());
+            vista.mostrarTipo("TURISMO");
+        } else {
+            vista.mostrarCapacidad(((Furgoneta) v).getCapacidad());
+            vista.mostrarTipo("FURGONETA");
         }
         vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
     }
 
     public void buscarVehiculoMasCaro() {
-        
+        Vehiculo v = Collections.max(agenciaAlquiler.getFlota().values(), new ComparadorPrecio());
+        if (v != null) {
+            vista.mostrarMatricula(v.getMatricula().toString());
+            vista.mostrarGrupo(v.getGrupo().toString());
+            String tipo = v.getClass().getSimpleName();
+            vista.mostrarTipo(tipo);
+            if (v instanceof Turismo) {
+                vista.mostrarPlazas(((Turismo) v).getPlazas());
+            } else {
+                vista.mostrarCapacidad(((Furgoneta) v).getCapacidad());
+            }
+            vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
+        } else {
+            vista.mostrarMensaje("Ha habido un error");
+        }
     }
 
     public void iniciar() {
         vista.mostrar();
     }
-     private static VehiculoDao getDao(String fichero){
-        VehiculoDao vd=null;
-        int posPunto=fichero.lastIndexOf(".")+1;
-        String extension=fichero.substring(posPunto);
-        switch(extension){
+
+    private static VehiculoDao getDao(String fichero) {
+        VehiculoDao vd = null;
+        int posPunto = fichero.lastIndexOf(".") + 1;
+        String extension = fichero.substring(posPunto);
+        switch (extension) {
             case "csv":
-                vd=new VehiculoDaoCsv(fichero);
-            break;
+                vd = new VehiculoDaoCsv(fichero);
+                break;
             case "obj":
-                vd=new VehiculoDaoObj(fichero);
-            break;
+                vd = new VehiculoDaoObj(fichero);
+                break;
             case "json":
-                vd=new VehiculoDaoJson(fichero);
+                vd = new VehiculoDaoJson(fichero);
                 break;
             case "xml":
-                vd=new VehiculoDaoXml(fichero);
+                vd = new VehiculoDaoXml(fichero);
         }
         return vd;
     }

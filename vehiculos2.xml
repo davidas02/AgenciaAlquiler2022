@@ -1,0 +1,30 @@
+<list>
+  <com.sauces.agenciaalquiler.modelo.Turismo>
+    <matricula>
+      <valor>0319CRY</valor>
+    </matricula>
+    <grupo>B</grupo>
+    <plazas>5</plazas>
+  </com.sauces.agenciaalquiler.modelo.Turismo>
+  <com.sauces.agenciaalquiler.modelo.Turismo>
+    <matricula>
+      <valor>2978DRF</valor>
+    </matricula>
+    <grupo>C</grupo>
+    <plazas>7</plazas>
+  </com.sauces.agenciaalquiler.modelo.Turismo>
+  <com.sauces.agenciaalquiler.modelo.Furgoneta>
+    <matricula>
+      <valor>8850DVL</valor>
+    </matricula>
+    <grupo>C</grupo>
+    <capacidad>15.0</capacidad>
+  </com.sauces.agenciaalquiler.modelo.Furgoneta>
+  <com.sauces.agenciaalquiler.modelo.Turismo>
+    <matricula>
+      <valor>8977HMR</valor>
+    </matricula>
+    <grupo>A</grupo>
+    <plazas>5</plazas>
+  </com.sauces.agenciaalquiler.modelo.Turismo>
+</list>

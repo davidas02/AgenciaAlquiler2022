@@ -28,9 +28,9 @@ public class VehiculoTableModel extends AbstractTableModel {
 
     public void setListadoVehiculos(List<Vehiculo> listadoVehiculos) {
         this.listadoVehiculos = listadoVehiculos;
+        this.fireTableDataChanged();
     }
     
-
     @Override
     public int getRowCount() {
         return listadoVehiculos.size();
@@ -50,21 +50,23 @@ public class VehiculoTableModel extends AbstractTableModel {
                 o=v.getMatricula().toString();
             break;
             case 1:
-                o=v.getGrupo();
+                o=v.getGrupo().toString();
             break;
              case 2:
-                 o=v.getClass().getSimpleName();
+                 o=v.getClass().getSimpleName().toUpperCase();
             break;
              case 3:
                  if(v instanceof Turismo){
                      o=((Turismo) v).getPlazas();
                  }else{
-                 o=0;
+                    o=0;
                  }
             break;
              case 4:
                  if(v instanceof Furgoneta){
                     o=((Furgoneta) v).getCapacidad();
+                 }else{
+                     o=0;
                  }
             break;
              case 5:
@@ -87,6 +89,7 @@ public class VehiculoTableModel extends AbstractTableModel {
                 clase=String.class;
                 break;
             case 1:
+                clase=String.class;
                 break;
             case 2:
                 clase=String.class;
@@ -95,10 +98,10 @@ public class VehiculoTableModel extends AbstractTableModel {
                 clase=Integer.class;
                 break;
             case 4:
-                clase=float.class;
+                clase=Float.class;
                 break;
             case 5:
-                clase=float.class;
+                clase=Float.class;
                 break;
         }
         return clase;

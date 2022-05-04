@@ -117,6 +117,8 @@ public class Ventana extends javax.swing.JFrame {
 
         lCapacidad.setText("CAPACIDAD");
 
+        tfCapacidad.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+
         javax.swing.GroupLayout panelVehiculoLayout = new javax.swing.GroupLayout(panelVehiculo);
         panelVehiculo.setLayout(panelVehiculoLayout);
         panelVehiculoLayout.setHorizontalGroup(
@@ -203,13 +205,17 @@ public class Ventana extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent lse){
                 int fila=tablaVehiculos.getSelectedRow();
                 if(fila>=0){
-                    mostrarMatricula((String) tablaVehiculos.getValueAt(fila,0));
-                    mostrarGrupo((String)tablaVehiculos.getValueAt(fila,2));
-                    String tipo=(String)tablaVehiculos.getValueAt(fila, 1);
+                    mostrarMatricula(tablaVehiculos.getValueAt(fila,0).toString());
+                    mostrarGrupo(tablaVehiculos.getValueAt(fila,1).toString());
+                    String tipo=tablaVehiculos.getValueAt(fila, 2).toString();
+                    mostrarTipo(tipo);
                     if(tipo.equals("TURISMO")){
                         mostrarPlazas((int)tablaVehiculos.getValueAt(fila, 3));
+                        mostrarCapacidad(0);
+
                     }else{
-                        mostrarCapacidad((float) tablaVehiculos.getValueAt(fila,4));
+                        mostrarCapacidad((float)tablaVehiculos.getValueAt(fila,4));
+                        mostrarPlazas(0);
                     }
                     mostrarPrecioAlquiler((float)tablaVehiculos.getValueAt(fila,5));
                 }
@@ -430,7 +436,7 @@ public class Ventana extends javax.swing.JFrame {
             lPlazas.setVisible(true);
             spPlazas.setVisible(true);
         }else{
-        lCapacidad.setVisible(true);
+            lCapacidad.setVisible(true);
             tfCapacidad.setVisible(true);
             lPlazas.setVisible(false);
             spPlazas.setVisible(false);
@@ -453,7 +459,9 @@ public class Ventana extends javax.swing.JFrame {
 
     private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
         // TODO add your handling code here:
-        if(solicitarConfirmacion()){}
+        if(solicitarConfirmacion()){
+        controlador.borrarVehiculo();
+        }
     }//GEN-LAST:event_bBorrarActionPerformed
 
     private void bMasBaratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMasBaratoActionPerformed
@@ -463,6 +471,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void bMasCaroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMasCaroActionPerformed
         // TODO add your handling code here:
+        controlador.buscarVehiculoMasCaro();
     }//GEN-LAST:event_bMasCaroActionPerformed
     
     public String getMatricula(){
@@ -522,7 +531,7 @@ public class Ventana extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
     public boolean solicitarConfirmacion(){
-        if(JOptionPane.showConfirmDialog(this, bMasCaro,"",JOptionPane.YES_NO_CANCEL_OPTION)==JOptionPane.YES_OPTION){
+        if(JOptionPane.showConfirmDialog(this, "Confirmar","Confirmamos?",JOptionPane.YES_NO_CANCEL_OPTION)==JOptionPane.YES_OPTION){
             return true;
         }else{
             return false;
