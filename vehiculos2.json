@@ -1,0 +1,34 @@
+[
+  {
+    "type": "Turismo",
+    "plazas": 5,
+    "matricula": {
+      "valor": "0319CRY"
+    },
+    "grupo": "B"
+  },
+  {
+    "type": "Turismo",
+    "plazas": 7,
+    "matricula": {
+      "valor": "2978DRF"
+    },
+    "grupo": "C"
+  },
+  {
+    "type": "Furgoneta",
+    "capacidad": 15.0,
+    "matricula": {
+      "valor": "8850DVL"
+    },
+    "grupo": "C"
+  },
+  {
+    "type": "Turismo",
+    "plazas": 5,
+    "matricula": {
+      "valor": "8977HMR"
+    },
+    "grupo": "A"
+  }
+]

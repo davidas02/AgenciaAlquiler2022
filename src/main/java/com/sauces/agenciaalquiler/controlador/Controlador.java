@@ -23,6 +23,8 @@ import com.sauces.agenciaalquiler.vista.Ventana;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -79,10 +81,12 @@ public class Controlador {
 
                     vista.mostrarMensaje("El vehiculo con matricula " + matricula.toString() + " no ha podido ser eliminado");
                 }
+                
             }
         } catch (MatriculaException ex) {
             vista.mostrarMensaje(ex.getMessage());
         }
+        vista.limpiarCampos();
     }
 
     public void buscarVehiculo() {
@@ -102,7 +106,17 @@ public class Controlador {
     }
 
     public void modificarVehiculo() {
-
+        try {
+            Vehiculo v=agenciaAlquiler.consultarVehiculo(Matricula.valueOf(vista.getMatricula()));
+            if(v instanceof Turismo){
+                ((Turismo) v).setPlazas(vista.getPlazas());
+            }else{
+                ((Furgoneta)v).setCapacidad(vista.getCapacidad());
+            }
+               vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
+        } catch (MatriculaException ex) {
+            vista.mostrarMensaje(ex.getMessage());
+        }
     }
 
     public void listarVehiculos() {
@@ -136,7 +150,11 @@ public class Controlador {
                 }
                 break;
         }
-        
+        switch(vista.getOrden()){
+            case "ALQUILER":
+                listado2.sort(new ComparadorPrecio());
+                break;
+        }
         if (listado2 != null) {
             vista.listarVehiculos(listado2);
         }
@@ -163,18 +181,20 @@ public class Controlador {
 
     public void buscarVehiculoMasBarato() {
         Vehiculo v = agenciaAlquiler.getVehiculoMasBarato();
-        vista.mostrarMatricula(v.getMatricula().toString());
-        vista.mostrarGrupo(v.getGrupo().toString());
-        String tipo = v.getClass().getSimpleName();
-
-        if (v instanceof Turismo) {
-            vista.mostrarPlazas(((Turismo) v).getPlazas());
-            vista.mostrarTipo("TURISMO");
+        if (v != null) {
+            vista.mostrarMatricula(v.getMatricula().toString());
+            vista.mostrarGrupo(v.getGrupo().toString());
+            String tipo = v.getClass().getSimpleName().toUpperCase();
+            vista.mostrarTipo(tipo);
+            if (v instanceof Turismo) {
+                vista.mostrarPlazas(((Turismo) v).getPlazas());
+            } else {
+                vista.mostrarCapacidad(((Furgoneta) v).getCapacidad());
+            }
+            vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
         } else {
-            vista.mostrarCapacidad(((Furgoneta) v).getCapacidad());
-            vista.mostrarTipo("FURGONETA");
+            vista.mostrarMensaje("Ha habido un error");
         }
-        vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
     }
 
     public void buscarVehiculoMasCaro() {
@@ -182,7 +202,7 @@ public class Controlador {
         if (v != null) {
             vista.mostrarMatricula(v.getMatricula().toString());
             vista.mostrarGrupo(v.getGrupo().toString());
-            String tipo = v.getClass().getSimpleName();
+            String tipo = v.getClass().getSimpleName().toUpperCase();
             vista.mostrarTipo(tipo);
             if (v instanceof Turismo) {
                 vista.mostrarPlazas(((Turismo) v).getPlazas());

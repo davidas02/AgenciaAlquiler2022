@@ -75,6 +75,9 @@ public class Ventana extends javax.swing.JFrame {
         miNuevoVehiculo = new javax.swing.JMenuItem();
         miBuscarVehiculo = new javax.swing.JMenuItem();
 
+        selectorFicheros.setCurrentDirectory(new java.io.File(".")
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         panelVehiculo.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Vehiculo"));
@@ -114,6 +117,11 @@ public class Ventana extends javax.swing.JFrame {
         });
 
         bModificar.setText("MODIFICAR");
+        bModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bModificarActionPerformed(evt);
+            }
+        });
 
         lCapacidad.setText("CAPACIDAD");
 
@@ -155,7 +163,7 @@ public class Ventana extends javax.swing.JFrame {
                                 .addComponent(lCapacidad)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(tfCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 93, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelVehiculoLayout.setVerticalGroup(
@@ -183,7 +191,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addGroup(panelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lPrecio)
                     .addComponent(tfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(panelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bBorrar)
                     .addComponent(bModificar))
@@ -278,7 +286,7 @@ public class Ventana extends javax.swing.JFrame {
         .addGroup(panelListadoLayout.createSequentialGroup()
             .addComponent(bListar)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(panelTablaVehiculos, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+            .addComponent(panelTablaVehiculos, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(panelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(lOrdenListado)
@@ -316,7 +324,7 @@ public class Ventana extends javax.swing.JFrame {
         .addGroup(panelOtrasLayout.createSequentialGroup()
             .addContainerGap()
             .addGroup(panelOtrasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(bMasBarato, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(bMasBarato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bMasCaro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
     );
@@ -378,24 +386,24 @@ public class Ventana extends javax.swing.JFrame {
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addComponent(panelOtras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelVehiculo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(panelVehiculo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelOtras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(panelListado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                 .addComponent(panelListado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(panelVehiculo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(panelVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(39, 39, 39)
                     .addComponent(panelOtras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(24, Short.MAX_VALUE))
+            .addContainerGap())
     );
 
     pack();
@@ -459,6 +467,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
         // TODO add your handling code here:
+        mostrarMatricula(JOptionPane.showInputDialog("Introduce la maricula del vehiculo a borrar"));
         if(solicitarConfirmacion()){
         controlador.borrarVehiculo();
         }
@@ -473,6 +482,13 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
         controlador.buscarVehiculoMasCaro();
     }//GEN-LAST:event_bMasCaroActionPerformed
+
+    private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
+        // TODO add your handling code here:
+        if(solicitarConfirmacion()){
+            controlador.modificarVehiculo();
+        }
+    }//GEN-LAST:event_bModificarActionPerformed
     
     public String getMatricula(){
         return tfMatricula.getText();
@@ -541,7 +557,7 @@ public class Ventana extends javax.swing.JFrame {
         this.controlador=controlador;
     }
     public void limpiarCampos(){
-        tfMatricula.setText("");
+        tfMatricula.setText(" ");
         cbGrupo.setSelectedIndex(0);
         spPlazas.setValue(0);
         cbTipo.setSelectedItem("TURISMO");
@@ -551,7 +567,7 @@ public class Ventana extends javax.swing.JFrame {
         setVisible(true);
     }
     public void actualizarTabla(){
-        
+        vehiculoTM.fireTableDataChanged();
     }
     /**
      * @param args the command line arguments
