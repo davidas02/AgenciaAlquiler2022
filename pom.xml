@@ -50,7 +50,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        com.sauces.agenciaalquiler.AA
+                                        com.sauces.agenciaalquiler.main.AAVentana
                                     </mainClass>
                                 </manifest>
                             </archive>

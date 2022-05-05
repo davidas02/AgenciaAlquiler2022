@@ -93,12 +93,17 @@ public class Controlador {
         try {
             Matricula matricula = Matricula.valueOf(vista.getMatricula());
             Vehiculo v = agenciaAlquiler.consultarVehiculo(matricula);
+            if(v!=null){
             vista.mostrarGrupo(v.getGrupo().toString());
             vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
             if (v instanceof Turismo) {
                 vista.mostrarPlazas(((Turismo) v).getPlazas());
             } else {
                 vista.mostrarCapacidad(((Furgoneta) v).getCapacidad());
+            }
+            }else{
+                vista.mostrarMensaje("No existe un vehiculo con la matricula "+matricula);
+                vista.limpiarCampos();
             }
         } catch (MatriculaException ex) {
             vista.mostrarMensaje(ex.getMessage());
@@ -108,12 +113,16 @@ public class Controlador {
     public void modificarVehiculo() {
         try {
             Vehiculo v=agenciaAlquiler.consultarVehiculo(Matricula.valueOf(vista.getMatricula()));
+            if(v!=null){
             if(v instanceof Turismo){
                 ((Turismo) v).setPlazas(vista.getPlazas());
             }else{
                 ((Furgoneta)v).setCapacidad(vista.getCapacidad());
             }
                vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
+            }else{
+                vista.mostrarMensaje("No hay una matricula seleccionada");
+            }
         } catch (MatriculaException ex) {
             vista.mostrarMensaje(ex.getMessage());
         }
@@ -180,38 +189,42 @@ public class Controlador {
     }
 
     public void buscarVehiculoMasBarato() {
-        Vehiculo v = agenciaAlquiler.getVehiculoMasBarato();
-        if (v != null) {
-            vista.mostrarMatricula(v.getMatricula().toString());
-            vista.mostrarGrupo(v.getGrupo().toString());
-            String tipo = v.getClass().getSimpleName().toUpperCase();
-            vista.mostrarTipo(tipo);
-            if (v instanceof Turismo) {
-                vista.mostrarPlazas(((Turismo) v).getPlazas());
-            } else {
-                vista.mostrarCapacidad(((Furgoneta) v).getCapacidad());
+        if(agenciaAlquiler.getFlota().size()>0){
+            Vehiculo v = agenciaAlquiler.getVehiculoMasBarato();
+            if (v != null) {
+                vista.mostrarMatricula(v.getMatricula().toString());
+                vista.mostrarGrupo(v.getGrupo().toString());
+                String tipo = v.getClass().getSimpleName().toUpperCase();
+                vista.mostrarTipo(tipo);
+                if (v instanceof Turismo) {
+                    vista.mostrarPlazas(((Turismo) v).getPlazas());
+                } else {
+                    vista.mostrarCapacidad(((Furgoneta) v).getCapacidad());
+                }
+                vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
             }
-            vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
         } else {
-            vista.mostrarMensaje("Ha habido un error");
+          vista.mostrarMensaje("No hay vehiculos en la tabla");
         }
     }
 
     public void buscarVehiculoMasCaro() {
-        Vehiculo v = Collections.max(agenciaAlquiler.getFlota().values(), new ComparadorPrecio());
-        if (v != null) {
-            vista.mostrarMatricula(v.getMatricula().toString());
-            vista.mostrarGrupo(v.getGrupo().toString());
-            String tipo = v.getClass().getSimpleName().toUpperCase();
-            vista.mostrarTipo(tipo);
-            if (v instanceof Turismo) {
-                vista.mostrarPlazas(((Turismo) v).getPlazas());
-            } else {
-                vista.mostrarCapacidad(((Furgoneta) v).getCapacidad());
+         if(agenciaAlquiler.getFlota().size()>0){
+            Vehiculo v = Collections.max(agenciaAlquiler.getFlota().values(), new ComparadorPrecio());
+            if (v != null) {
+                vista.mostrarMatricula(v.getMatricula().toString());
+                vista.mostrarGrupo(v.getGrupo().toString());
+                String tipo = v.getClass().getSimpleName().toUpperCase();
+                vista.mostrarTipo(tipo);
+                if (v instanceof Turismo) {
+                    vista.mostrarPlazas(((Turismo) v).getPlazas());
+                } else {
+                    vista.mostrarCapacidad(((Furgoneta) v).getCapacidad());
+                }
+                vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
             }
-            vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
         } else {
-            vista.mostrarMensaje("Ha habido un error");
+            vista.mostrarMensaje("No hay vehiculos en la tabla");
         }
     }
 

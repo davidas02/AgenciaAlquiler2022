@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.asuces.agenciaalquiler.main;
+package com.sauces.agenciaalquiler.main;
 
 import com.sauces.agenciaalquiler.controlador.Controlador;
 import com.sauces.agenciaalquiler.modelo.AgenciaAlquiler;

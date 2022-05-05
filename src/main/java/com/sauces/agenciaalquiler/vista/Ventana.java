@@ -467,9 +467,14 @@ public class Ventana extends javax.swing.JFrame {
 
     private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
         // TODO add your handling code here:
-        mostrarMatricula(JOptionPane.showInputDialog("Introduce la maricula del vehiculo a borrar"));
-        if(solicitarConfirmacion()){
-        controlador.borrarVehiculo();
+        String matricula=JOptionPane.showInputDialog("Introduce la maricula del vehiculo a borrar");
+        mostrarMatricula(matricula);
+        if(matricula!=null){
+            if(!matricula.isBlank()){
+                if(solicitarConfirmacion()){
+                    controlador.borrarVehiculo();
+                }
+            }
         }
     }//GEN-LAST:event_bBorrarActionPerformed
 
@@ -557,13 +562,15 @@ public class Ventana extends javax.swing.JFrame {
         this.controlador=controlador;
     }
     public void limpiarCampos(){
-        tfMatricula.setText(" ");
+        mostrarMatricula(" ");
         cbGrupo.setSelectedIndex(0);
-        spPlazas.setValue(0);
-        cbTipo.setSelectedItem("TURISMO");
-        tfCapacidad.setValue(0);
+        mostrarPlazas(0);
+        cbTipo.setSelectedIndex(0);
+        mostrarCapacidad(0);
+        mostrarPrecioAlquiler(0);
     }
     public void mostrar(){
+        limpiarCampos();
         setVisible(true);
     }
     public void actualizarTabla(){
