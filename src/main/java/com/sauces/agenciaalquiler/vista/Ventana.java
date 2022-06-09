@@ -71,9 +71,14 @@ public class Ventana extends javax.swing.JFrame {
         menuArchivo = new javax.swing.JMenu();
         miAbrir = new javax.swing.JMenuItem();
         miGuardar = new javax.swing.JMenuItem();
-        miVehiculo = new javax.swing.JMenu();
+        menuVehiculo = new javax.swing.JMenu();
         miNuevoVehiculo = new javax.swing.JMenuItem();
         miBuscarVehiculo = new javax.swing.JMenuItem();
+        menuExamen = new javax.swing.JMenu();
+        miConsultarPrecio = new javax.swing.JMenuItem();
+        miContadorTurismos = new javax.swing.JMenuItem();
+        miCapacidadMedia = new javax.swing.JMenuItem();
+        miTurismoMasPlazas = new javax.swing.JMenuItem();
 
         selectorFicheros.setCurrentDirectory(new java.io.File(".")
         );
@@ -358,7 +363,7 @@ public class Ventana extends javax.swing.JFrame {
 
     menu.add(menuArchivo);
 
-    miVehiculo.setText("Vehiculo");
+    menuVehiculo.setText("Vehiculo");
 
     miNuevoVehiculo.setText("Nuevo");
     miNuevoVehiculo.addActionListener(new java.awt.event.ActionListener() {
@@ -366,7 +371,7 @@ public class Ventana extends javax.swing.JFrame {
             miNuevoVehiculoActionPerformed(evt);
         }
     });
-    miVehiculo.add(miNuevoVehiculo);
+    menuVehiculo.add(miNuevoVehiculo);
 
     miBuscarVehiculo.setText("Buscar");
     miBuscarVehiculo.addActionListener(new java.awt.event.ActionListener() {
@@ -374,9 +379,45 @@ public class Ventana extends javax.swing.JFrame {
             miBuscarVehiculoActionPerformed(evt);
         }
     });
-    miVehiculo.add(miBuscarVehiculo);
+    menuVehiculo.add(miBuscarVehiculo);
 
-    menu.add(miVehiculo);
+    menu.add(menuVehiculo);
+
+    menuExamen.setText("Examen");
+
+    miConsultarPrecio.setText("Consultar precio");
+    miConsultarPrecio.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            miConsultarPrecioActionPerformed(evt);
+        }
+    });
+    menuExamen.add(miConsultarPrecio);
+
+    miContadorTurismos.setText("Número de turismos");
+    miContadorTurismos.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            miContadorTurismosActionPerformed(evt);
+        }
+    });
+    menuExamen.add(miContadorTurismos);
+
+    miCapacidadMedia.setText("Capacidad media");
+    miCapacidadMedia.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            miCapacidadMediaActionPerformed(evt);
+        }
+    });
+    menuExamen.add(miCapacidadMedia);
+
+    miTurismoMasPlazas.setText("Turismo con mas plazas");
+    miTurismoMasPlazas.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            miTurismoMasPlazasActionPerformed(evt);
+        }
+    });
+    menuExamen.add(miTurismoMasPlazas);
+
+    menu.add(menuExamen);
 
     setJMenuBar(menu);
 
@@ -494,6 +535,26 @@ public class Ventana extends javax.swing.JFrame {
             controlador.modificarVehiculo();
         }
     }//GEN-LAST:event_bModificarActionPerformed
+
+    private void miContadorTurismosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miContadorTurismosActionPerformed
+        // TODO add your handling code here:
+        controlador.calcularNumeroTurismos();
+    }//GEN-LAST:event_miContadorTurismosActionPerformed
+
+    private void miCapacidadMediaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCapacidadMediaActionPerformed
+        // TODO add your handling code here:
+        controlador.calcularCapacidadMedia();
+    }//GEN-LAST:event_miCapacidadMediaActionPerformed
+
+    private void miConsultarPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarPrecioActionPerformed
+        // TODO add your handling code here:
+        controlador.consultarPrecio();
+    }//GEN-LAST:event_miConsultarPrecioActionPerformed
+
+    private void miTurismoMasPlazasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miTurismoMasPlazasActionPerformed
+        // TODO add your handling code here:
+        controlador.mostrarTurismoMasPlazas();
+    }//GEN-LAST:event_miTurismoMasPlazasActionPerformed
     
     public String getMatricula(){
         return tfMatricula.getText();
@@ -576,6 +637,12 @@ public class Ventana extends javax.swing.JFrame {
     public void actualizarTabla(){
         vehiculoTM.fireTableDataChanged();
     }
+    
+    public String getEntradaExamen(){
+       return JOptionPane.showInputDialog(this, "");
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -633,11 +700,16 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel lTipo;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenu menuExamen;
+    private javax.swing.JMenu menuVehiculo;
     private javax.swing.JMenuItem miAbrir;
     private javax.swing.JMenuItem miBuscarVehiculo;
+    private javax.swing.JMenuItem miCapacidadMedia;
+    private javax.swing.JMenuItem miConsultarPrecio;
+    private javax.swing.JMenuItem miContadorTurismos;
     private javax.swing.JMenuItem miGuardar;
     private javax.swing.JMenuItem miNuevoVehiculo;
-    private javax.swing.JMenu miVehiculo;
+    private javax.swing.JMenuItem miTurismoMasPlazas;
     private javax.swing.JPanel panelListado;
     private javax.swing.JPanel panelOtras;
     private javax.swing.JScrollPane panelTablaVehiculos;

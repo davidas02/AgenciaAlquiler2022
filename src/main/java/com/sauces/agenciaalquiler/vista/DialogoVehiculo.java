@@ -67,6 +67,8 @@ public class DialogoVehiculo extends javax.swing.JDialog {
 
         lPlazas.setText("PLAZAS");
 
+        spPlazas.setModel(new javax.swing.SpinnerNumberModel(1, 1, 7, 1));
+
         bAceptar.setText("ACEPTAR");
         bAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,7 +223,7 @@ public class DialogoVehiculo extends javax.swing.JDialog {
     public void limpiarCampos(){
         tfMatricula.setText("");
         cbGrupo.setSelectedIndex(0);
-        spPlazas.setValue(0);
+        spPlazas.setValue(1);
         cbTipo.setSelectedItem("TURISMO");
         tfCapacidad.setValue(0);
     }

@@ -36,7 +36,7 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="miVehiculo">
+        <Menu class="javax.swing.JMenu" name="menuVehiculo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Vehiculo"/>
           </Properties>
@@ -55,6 +55,45 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miBuscarVehiculoActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menuExamen">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Examen"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="miConsultarPrecio">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consultar precio"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miConsultarPrecioActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="miContadorTurismos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="N&#xfa;mero de turismos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miContadorTurismosActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="miCapacidadMedia">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Capacidad media"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miCapacidadMediaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="miTurismoMasPlazas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Turismo con mas plazas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miTurismoMasPlazasActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

@@ -23,8 +23,6 @@ import com.sauces.agenciaalquiler.vista.Ventana;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -60,6 +58,7 @@ public class Controlador {
             if (agenciaAlquiler.incluirVehiculo(v)) {
                 vista.mostrarPrecioAlquiler(v.getPrecioAlquiler());
                 vista.mostrarMensaje("Vehiculo incluido con exito");
+                listarVehiculos();
             } else {
                 vista.mostrarMensaje("No se ha podido incluir el vehiculo");
             }
@@ -183,6 +182,7 @@ public class Controlador {
         agenciaAlquiler.setVehiculoDao(getDao(vista.getArchivo()));
         try {
             vista.mostrarMensaje("Se han cargado " + agenciaAlquiler.cargarVehiculos() + " vehiculos");
+            listarVehiculos();
         } catch (DaoException ex) {
             vista.mostrarMensaje(ex.getMessage());
         }
@@ -207,7 +207,65 @@ public class Controlador {
           vista.mostrarMensaje("No hay vehiculos en la tabla");
         }
     }
-
+    
+    public void consultarPrecio(){
+        Matricula matricula=null;
+        Vehiculo v=null;
+        float precio=0;
+        try {
+            matricula = Matricula.valueOf(vista.getEntradaExamen());
+            if(matricula!=null){
+                v=agenciaAlquiler.consultarVehiculo(matricula);
+            }
+            if(v!=null){
+                precio=v.getPrecioAlquiler();
+                vista.mostrarMensaje("El precio del vehiculo es de "+precio+" al dia");
+            }else{
+                vista.mostrarMensaje("No existe ningun vehiculo con esa matricula");
+            }
+        } catch (MatriculaException ex) {
+            vista.mostrarMensaje("Formato de matricula erroneo");
+        }
+    }
+    
+    public void calcularNumeroTurismos(){
+        int contadorTurismos=0;
+        for(Vehiculo v:agenciaAlquiler.getFlota().values()){
+            if(v instanceof Turismo){
+                contadorTurismos++;
+            }
+        }
+        vista.mostrarMensaje(contadorTurismos+"");
+    }
+    public void calcularCapacidadMedia(){
+        int contador=0;
+        float acumulador=0.0f;
+        float media=0.0f;
+        for(Vehiculo v:agenciaAlquiler.getFlota().values()){
+            if(v instanceof Furgoneta){
+                contador++;
+                acumulador+=((Furgoneta) v).getCapacidad();
+            }
+        }
+        media=acumulador/contador;
+        vista.mostrarMensaje("La media de capacidad es "+media);
+    }
+    public void mostrarTurismoMasPlazas(){
+        int plazas=0;
+        int plazasMax=0;
+        Turismo turismo=null;
+        for(Vehiculo v:agenciaAlquiler.getFlota().values()){
+            if(v instanceof Turismo){
+                plazas=((Turismo) v).getPlazas();
+                if(plazas>plazasMax){
+                    plazasMax=plazas;
+                    turismo=(Turismo) v;
+                }
+            }
+        }
+        vista.mostrarMensaje(turismo.toString());
+    }
+    
     public void buscarVehiculoMasCaro() {
          if(agenciaAlquiler.getFlota().size()>0){
             Vehiculo v = Collections.max(agenciaAlquiler.getFlota().values(), new ComparadorPrecio());

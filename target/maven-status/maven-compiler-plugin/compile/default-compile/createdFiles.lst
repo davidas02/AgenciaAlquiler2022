@@ -13,10 +13,13 @@ com\sauces\agenciaalquiler\vista\DialogoVehiculo$4.class
 com\sauces\agenciaalquiler\vista\Ventana$1.class
 com\sauces\agenciaalquiler\vista\Ventana$7.class
 com\sauces\agenciaalquiler\vista\VehiculoTableModel.class
+com\sauces\agenciaalquiler\vista\Ventana$16.class
+com\sauces\agenciaalquiler\vista\Ventana$14.class
 com\sauces\agenciaalquiler\vista\Ventana$11.class
 com\sauces\agenciaalquiler\vista\Ventana$9.class
 com\sauces\agenciaalquiler\vista\Ventana$4.class
 com\sauces\agenciaalquiler\modelo\VehiculoDaoObj.class
+com\sauces\agenciaalquiler\vista\Ventana$13.class
 com\sauces\agenciaalquiler\modelo\VehiculoDao.class
 com\sauces\agenciaalquiler\modelo\VehiculoDaoJson$2.class
 com\sauces\agenciaalquiler\vista\DialogoVehiculo$1.class
@@ -36,4 +39,5 @@ com\sauces\agenciaalquiler\modelo\DaoException.class
 com\sauces\agenciaalquiler\main\AAVentana.class
 com\sauces\agenciaalquiler\vista\DialogoVehiculo$3.class
 com\sauces\agenciaalquiler\modelo\VehiculoDaoCsv.class
+com\sauces\agenciaalquiler\vista\Ventana$15.class
 com\sauces\agenciaalquiler\vista\DialogoVehiculo.class
